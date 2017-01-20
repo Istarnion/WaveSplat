@@ -18,6 +18,8 @@ public class SplatScript : MonoBehaviour {
     private Color splatColor;
     private float perlinStart;
 
+    public float animationScale = 80;
+
 	void Start()
     {
         splatColor = colors[Random.Range(0, colors.Length)];
@@ -35,7 +37,7 @@ public class SplatScript : MonoBehaviour {
 
         if (radius < maxRadius)
         {
-            if ((radius += Time.deltaTime*80) > maxRadius) radius = maxRadius;
+            if ((radius += Time.deltaTime*animationScale) > maxRadius) radius = maxRadius;
             GenerateMesh();
         }
     }
