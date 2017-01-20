@@ -120,8 +120,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f95343fd75be84a5aabad4495a0e1e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 5
+  maxRadius: 5
   perlinStepSize: 0.1
+  colors:
+  - {r: 0.88235295, g: 0.22058824, b: 0.53549695, a: 1}
+  - {r: 0.9264706, g: 0.06812285, b: 0.12139958, a: 1}
+  - {r: 0.42409918, g: 0.10467128, b: 0.8897059, a: 1}
 --- !u!23 &1576497210
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -135,7 +139,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: ba1222737b8514521b13b84469468205, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
