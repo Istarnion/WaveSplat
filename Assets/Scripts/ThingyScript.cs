@@ -22,11 +22,11 @@ public class ThingyScript : MonoBehaviour
 
             if (good)
             {
-                manager.GoodHit();
+                manager.GoodHit(this);
             }
             else
             {
-                manager.BadHit();
+                manager.BadHit(this);
             }
         }
     }

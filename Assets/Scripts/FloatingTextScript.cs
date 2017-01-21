@@ -10,7 +10,7 @@ public class FloatingTextScript : MonoBehaviour
     public Color color;
     public int number;
 
-    private float timeToLive = 1.5f;
+    private float timeToLive = 0.75f;
 
     void Awake()
     {
@@ -20,7 +20,7 @@ public class FloatingTextScript : MonoBehaviour
     void Start()
     {
         textMesh.color = color;
-        textMesh.text = string.Format("{+0;-#}", number);
+        textMesh.text = number.ToString("+#;-#:0");
     }
 
     void Update()
