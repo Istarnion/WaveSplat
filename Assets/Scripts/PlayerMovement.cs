@@ -19,10 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 acceleration;
 
     private SplatManager splatter;
-
-    private int noteIndex = 0;
-    private List<AudioClip> hitScale;
-    private List<AudioClip> levelComplete;
+    private AudioManager audioManager;
 
     [HideInInspector]
     public bool inControll;
@@ -31,14 +28,10 @@ public class PlayerMovement : MonoBehaviour
     {
         position = transform.position;
         splatter = GameObject.Find("Splatter").GetComponent<SplatManager>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+    }
 
-        hitScale = new List<AudioClip>();
-        levelComplete = new List<AudioClip>();
-        LoadSounds("Audio/HitScale", hitScale);
-        LoadSounds("Audio/LevelComplete", levelComplete);
-	}
-	
-	void FixedUpdate ()
+    void FixedUpdate ()
     {
         if (!inControll)
         {
@@ -93,8 +86,7 @@ public class PlayerMovement : MonoBehaviour
             splatCooldown += Time.fixedDeltaTime;
             if (splatCooldown >= splatTime)
             {
-                AudioSource.PlayClipAtPoint(hitScale[noteIndex++], Vector3.zero);
-                if (noteIndex == hitScale.Count) noteIndex = 0;
+                audioManager.PlaySplat();
                 splatCooldown = 0;
                 splatter.SpawnSplat(transform.position, Utils.Map(
                     velocity.magnitude,
@@ -108,9 +100,4 @@ public class PlayerMovement : MonoBehaviour
             velocity.x = velocity.y = 0;
         }
 	}
-
-    void LoadSounds(string path, List<AudioClip> clips)
-    {
-        foreach(Object clip in Resources.LoadAll(path)) clips.Add((AudioClip) clip);     
-    }
 }

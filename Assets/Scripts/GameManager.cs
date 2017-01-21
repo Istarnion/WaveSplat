@@ -16,10 +16,12 @@ public class GameManager : MonoBehaviour
 
     private bool updateTimer = false;
 
-	void Start ()
+    private AudioManager audioManager;
+
+    void Start ()
     {
         levels = Resources.LoadAll("Levels", typeof(GameObject));
-
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         currentLevel = ((GameObject)Instantiate(levels[0])).GetComponent<LevelScript>();
 
         StartCoroutine(GotoNextLevel());
@@ -49,8 +51,7 @@ public class GameManager : MonoBehaviour
     {
         if (++currentLevel.thingiesHit >= currentLevel.numThingies)
         {
-            // TODO: Play level complete sound
-
+            audioManager.PlayLevelComplete(currentLevel.numThingies - 1);
             if (++currentLevelIndex < levels.Length)
             {
                 StartCoroutine(GotoNextLevel());
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // TODO: Play thingy get sound
+            audioManager.PlayHit(currentLevel.thingiesHit - 1);
         }
     }
 
