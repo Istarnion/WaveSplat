@@ -4,21 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
 public class MenuScript : MonoBehaviour
 {
-	void Start ()
+    private AudioClip menuOne, menuTwo;
+    private bool soundFlip;
+
+    void Start()
     {
-<<<<<<< HEAD
         Button startBtn = GameObject.Find("StartButton").GetComponent<Button>();
         startBtn.Select();
 
         Button quitBtn = GameObject.Find("QuitButton").GetComponent<Button>();
 
-=======
-        Button btn = GameObject.Find("StartButton").GetComponent<Button>();
-        btn.Select();
->>>>>>> f8156d731fcc6fb9ba40d24b4b214a808dc978a4
-	}
+        menuOne = (AudioClip) Resources.Load("Audio/menu_01");
+        menuTwo = (AudioClip) Resources.Load("Audio/menu_02");
+    }
 
     public void OnStartClick()
     {
@@ -32,6 +33,9 @@ public class MenuScript : MonoBehaviour
 
     public void PlayMenuSelectSound()
     {
+        if (soundFlip) AudioSource.PlayClipAtPoint(menuOne, Camera.main.transform.position);
+        else AudioSource.PlayClipAtPoint(menuTwo, Camera.main.transform.position);
 
+        soundFlip = !soundFlip;
     }
 }
