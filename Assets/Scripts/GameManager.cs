@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     public void BadHit(ThingyScript thingy)
     {
-        // TODO: Play bad sound,
+        audioManager.PlayFail();
         currentLevel.timeLeft -= 5;
         SpawnFloatingText(-5, thingy.transform.localPosition);
     }
