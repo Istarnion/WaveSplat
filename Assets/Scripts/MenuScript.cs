@@ -8,7 +8,6 @@ public class MenuScript : MonoBehaviour
 {
 	void Start ()
     {
-
         Button btn = GameObject.Find("StartButton").GetComponent<Button>();
         btn.Select();
 	}
