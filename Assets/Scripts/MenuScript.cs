@@ -9,16 +9,15 @@ public class MenuScript : MonoBehaviour
 {
     private AudioClip menuOne, menuTwo;
     private bool soundFlip;
+    private Button startBtn;
 
     void Start()
     {
-        Button startBtn = GameObject.Find("StartButton").GetComponent<Button>();
+        menuOne = (AudioClip)Resources.Load("Audio/Menu/menu_01");
+        menuTwo = (AudioClip)Resources.Load("Audio/Menu/menu_02");
+
+        startBtn = GameObject.Find("StartButton").GetComponent<Button>();
         startBtn.Select();
-
-        Button quitBtn = GameObject.Find("QuitButton").GetComponent<Button>();
-
-        menuOne = (AudioClip) Resources.Load("Audio/menu_01");
-        menuTwo = (AudioClip) Resources.Load("Audio/menu_02");
     }
 
     public void OnStartClick()
@@ -33,8 +32,8 @@ public class MenuScript : MonoBehaviour
 
     public void PlayMenuSelectSound()
     {
-        if (soundFlip) AudioSource.PlayClipAtPoint(menuOne, Camera.main.transform.position);
-        else AudioSource.PlayClipAtPoint(menuTwo, Camera.main.transform.position);
+        if (soundFlip) AudioSource.PlayClipAtPoint(menuOne, Camera.main.transform.position, 1f);
+        else AudioSource.PlayClipAtPoint(menuTwo, Camera.main.transform.position, 1f);
 
         soundFlip = !soundFlip;
     }
