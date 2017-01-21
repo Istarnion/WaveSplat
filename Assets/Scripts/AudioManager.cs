@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     private List<AudioClip> activeHitScale; // one array per instrument
     private List<AudioClip> activeLevelCompleteChords; // one per instr
     private List<AudioClip> backgroundMusic;
+    private List<AudioClip> failHits;
 
     void Awake()
     {
@@ -19,10 +20,12 @@ public class AudioManager : MonoBehaviour
 
         activeHitScale = new List<AudioClip>();
         activeLevelCompleteChords = new List<AudioClip>();
+        failHits = new List<AudioClip>();
 
         LoadSounds("Audio/BackingLoops", backgroundMusic);
         LoadSounds("Audio/HitScale/Piano", activeHitScale);
         LoadSounds("Audio/LevelComplete/Piano", activeLevelCompleteChords);
+        LoadSounds("Audio/FailHit", failHits);
 
         StartCoroutine(BackgroundMusic());
     }
@@ -47,6 +50,12 @@ public class AudioManager : MonoBehaviour
         if (splatSwitch) AudioSource.PlayClipAtPoint(splatOne, Camera.main.transform.position, 0.3f);
         else AudioSource.PlayClipAtPoint(splatTwo, Camera.main.transform.position, 0.3f);
         splatSwitch = !splatSwitch;
+    }
+
+    public void PlayFail()
+    {
+        int index = Random.Range(0, failHits.Count);
+        AudioSource.PlayClipAtPoint(failHits[index], Camera.main.transform.position, 1f);
     }
 
     public void PlayHit(int clipIndex)
