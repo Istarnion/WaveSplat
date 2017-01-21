@@ -54,12 +54,18 @@ public class SplatScript : MonoBehaviour {
             if (noteIndex == levelComplete.Count) noteIndex = 0;
         }
 
-
         if (radius < maxRadius)
         {
             if ((radius += Time.deltaTime*animationScale) > maxRadius) radius = maxRadius;
             GenerateMesh();
         }
+        // TODO: Uncomment this:
+        /*
+        else
+        {
+            Destroy(this); // Remove this script so it won't spend update() calls
+        }
+        */
     }
 
     void GenerateMesh()
@@ -74,10 +80,21 @@ public class SplatScript : MonoBehaviour {
         for(int i=1; i<verts.Capacity; ++i)
         {
             perlinState += perlinStepSize;
+            float length = radius * Map(Mathf.PerlinNoise(perlinState, 0), 0, 1, 0.5f, 1.2f);
+            float x = Mathf.Cos(i * thetaInc);
+            float y = Mathf.Sin(i * thetaInc);
+
+            // TODO: Add layer mask if needed
+            var hitInfo = Physics2D.Raycast(transform.position, new Vector2(x, y), length);
+            if(hitInfo)
+            {
+                length = hitInfo.distance;
+                // TODO: Look at what we hit, and react
+            }
 
             verts.Add(new Vector3(
-                Mathf.Cos(i*thetaInc)*radius*Map(Mathf.PerlinNoise(perlinState, 0), 0, 1, 0.5f, 1.2f),
-                Mathf.Sin(i*thetaInc)*radius*Map(Mathf.PerlinNoise(perlinState, 0), 0, 1, 0.5f, 1.2f),
+                Mathf.Cos(i*thetaInc)*length,
+                Mathf.Sin(i*thetaInc)*length,
                 0f
             ));
         }
