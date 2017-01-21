@@ -9,6 +9,8 @@ public class SplatScript : MonoBehaviour {
     MeshFilter meshFilter;
 
     private float radius = 0;
+
+    [HideInInspector]
     public float maxRadius = 5;
 
     [Range(0.01f, 0.5f)]
@@ -17,25 +19,12 @@ public class SplatScript : MonoBehaviour {
     public Color[] colors;
     private Color splatColor;
     private float perlinStart;
-    private int noteIndex = 0;
-    private List<AudioClip> hitScale;
-    private List<AudioClip> levelComplete;
 
 	void Start()
     {
-        hitScale = new List<AudioClip>();
-        levelComplete = new List<AudioClip>();
-        LoadSounds("Audio/HitScale", hitScale);
-        LoadSounds("Audio/LevelComplete", levelComplete);
-
         splatColor = colors[Random.Range(0, colors.Length)];
         perlinStart = Random.value*1000.0f;
 	}
-
-    void LoadSounds(string path, List<AudioClip> clips)
-    {
-        foreach(Object clip in Resources.LoadAll(path)) clips.Add((AudioClip) clip);     
-    }
 
     void Update()
     {
@@ -44,14 +33,6 @@ public class SplatScript : MonoBehaviour {
             radius = 0;
             splatColor = colors[Random.Range(0, colors.Length)];
             perlinStart = Random.value*1000.0f;
-            AudioSource.PlayClipAtPoint(hitScale[noteIndex++], Vector3.zero);
-            if (noteIndex == hitScale.Count) noteIndex = 0;
-        }
-
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            AudioSource.PlayClipAtPoint(levelComplete[noteIndex++], Vector3.zero);
-            if (noteIndex == levelComplete.Count) noteIndex = 0;
         }
 
         if (radius < maxRadius)
@@ -59,13 +40,10 @@ public class SplatScript : MonoBehaviour {
             if ((radius += Time.deltaTime*animationScale) > maxRadius) radius = maxRadius;
             GenerateMesh();
         }
-        // TODO: Uncomment this:
-        /*
         else
         {
             Destroy(this); // Remove this script so it won't spend update() calls
         }
-        */
     }
 
     void GenerateMesh()
@@ -80,7 +58,7 @@ public class SplatScript : MonoBehaviour {
         for(int i=1; i<verts.Capacity; ++i)
         {
             perlinState += perlinStepSize;
-            float length = radius * Map(Mathf.PerlinNoise(perlinState, 0), 0, 1, 0.5f, 1.2f);
+            float length = radius * Utils.Map(Mathf.PerlinNoise(perlinState, 0), 0, 1, 0.5f, 1.2f);
             float x = Mathf.Cos(i * thetaInc);
             float y = Mathf.Sin(i * thetaInc);
 
@@ -120,8 +98,4 @@ public class SplatScript : MonoBehaviour {
         meshRenderer.material.color = splatColor;
     }
 
-    float Map(float t, float mina, float maxa, float minb, float maxb)
-    {
-        return (t - mina) * (maxb - minb) / (maxa - mina) + minb;
-    }
 }

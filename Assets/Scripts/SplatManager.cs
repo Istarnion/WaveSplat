@@ -6,15 +6,17 @@ public class SplatManager : MonoBehaviour {
 
     public GameObject splatPrefab;
 
-    void Start()
-    {
-        SpawnSplat(Vector3.zero, 5);
-    }
+    public float maxSplatRadius = 5;
+
+    private Vector3 offset = new Vector3(0, 0, 0.5f);
 
     public void SpawnSplat(Vector3 pos, float radius)
     {
         SplatScript splat = Instantiate(splatPrefab, transform).GetComponent<SplatScript>();
-        splat.transform.position = pos;
-        splat.maxRadius = radius;
+        offset.x = pos.x;
+        offset.y = pos.y;
+        offset.z -= 0.01f;
+        splat.transform.position = offset;
+        splat.maxRadius = radius * maxSplatRadius;
     }
 }
