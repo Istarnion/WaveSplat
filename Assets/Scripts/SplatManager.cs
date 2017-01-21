@@ -8,7 +8,10 @@ public class SplatManager : MonoBehaviour {
 
     public float maxSplatRadius = 5;
 
-    private Vector3 offset = new Vector3(0, 0, 0.5f);
+    public Color[] colors;
+    private int colorIndex = 0;
+
+    private Vector3 offset = new Vector3(0, 0, 5);
 
     public void SpawnSplat(Vector3 pos, float radius)
     {
@@ -18,5 +21,6 @@ public class SplatManager : MonoBehaviour {
         offset.z -= 0.01f;
         splat.transform.position = offset;
         splat.maxRadius = radius * maxSplatRadius;
+        splat.splatColor = colors[colorIndex++ % colors.Length];
     }
 }
