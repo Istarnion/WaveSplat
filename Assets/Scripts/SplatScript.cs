@@ -13,18 +13,29 @@ public class SplatScript : MonoBehaviour {
 
     [Range(0.01f, 0.5f)]
     public float perlinStepSize = 0.01f;
-
+    public float animationScale = 80f;
     public Color[] colors;
     private Color splatColor;
     private float perlinStart;
-
-    public float animationScale = 80;
+    private int noteIndex = 0;
+    private List<AudioClip> hitScale;
+    private List<AudioClip> levelComplete;
 
 	void Start()
     {
+        hitScale = new List<AudioClip>();
+        levelComplete = new List<AudioClip>();
+        LoadSounds("Audio/HitScale", hitScale);
+        LoadSounds("Audio/LevelComplete", levelComplete);
+
         splatColor = colors[Random.Range(0, colors.Length)];
         perlinStart = Random.value*1000.0f;
 	}
+
+    void LoadSounds(string path, List<AudioClip> clips)
+    {
+        foreach(Object clip in Resources.LoadAll(path)) clips.Add((AudioClip) clip);     
+    }
 
     void Update()
     {
@@ -33,7 +44,16 @@ public class SplatScript : MonoBehaviour {
             radius = 0;
             splatColor = colors[Random.Range(0, colors.Length)];
             perlinStart = Random.value*1000.0f;
+            AudioSource.PlayClipAtPoint(hitScale[noteIndex++], Vector3.zero);
+            if (noteIndex == hitScale.Count) noteIndex = 0;
         }
+
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            AudioSource.PlayClipAtPoint(levelComplete[noteIndex++], Vector3.zero);
+            if (noteIndex == levelComplete.Count) noteIndex = 0;
+        }
+
 
         if (radius < maxRadius)
         {
