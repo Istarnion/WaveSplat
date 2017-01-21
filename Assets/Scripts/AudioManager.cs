@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour
         while(true)
         {
             int index = Random.Range(0, backgroundMusic.Count);
-            AudioSource.PlayClipAtPoint(backgroundMusic[index], Camera.main.transform.position, 1f);
+            AudioSource.PlayClipAtPoint(backgroundMusic[index], Camera.main.transform.position, 0.7f);
             yield return new WaitForSeconds(backgroundMusic[index].length - 0.499f); // magic
         }
     }
@@ -44,8 +44,8 @@ public class AudioManager : MonoBehaviour
     
     public void PlaySplat()
     {
-        if (splatSwitch) AudioSource.PlayClipAtPoint(splatOne, Camera.main.transform.position);
-        else AudioSource.PlayClipAtPoint(splatTwo, Camera.main.transform.position);
+        if (splatSwitch) AudioSource.PlayClipAtPoint(splatOne, Camera.main.transform.position, 0.3f);
+        else AudioSource.PlayClipAtPoint(splatTwo, Camera.main.transform.position, 0.3f);
         splatSwitch = !splatSwitch;
     }
 
