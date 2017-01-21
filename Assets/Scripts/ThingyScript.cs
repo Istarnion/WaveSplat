@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class ThingyScript : MonoBehaviour
 {
-
     public bool good = true;
     bool hasBeenHit = false;
 
-	void Start ()
+    GameManager manager;
+
+	void Awake()
     {
+        manager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
 	}
 
     public void Hit()
@@ -18,7 +20,14 @@ public class ThingyScript : MonoBehaviour
         {
             hasBeenHit = true;
 
-
+            if (good)
+            {
+                manager.GoodHit();
+            }
+            else
+            {
+                manager.BadHit();
+            }
         }
     }
 }

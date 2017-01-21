@@ -21,9 +21,14 @@ public class SplatScript : MonoBehaviour {
     public Color splatColor;
     private float perlinStart;
 
+    List<Vector3> verts;
+    List<int> indices;
+
 	void Start()
     {
         perlinStart = Random.value*1000.0f;
+        verts = new List<Vector3>();
+        indices = new List<int>();
 	}
 
     void Update()
@@ -41,9 +46,15 @@ public class SplatScript : MonoBehaviour {
 
     void GenerateMesh()
     {
-        Mesh mesh = new Mesh();
+        meshFilter = GetComponent<MeshFilter>();
+        Mesh mesh = meshFilter.mesh;
+        if (!mesh)
+        {
+            mesh = new Mesh();
+            meshFilter.mesh = mesh;
+        }
 
-        List<Vector3> verts = new List<Vector3>();
+        verts.Clear();
         verts.Capacity = 181;
         verts.Add(Vector3.zero);
         float thetaInc = 2 * Mathf.PI / (verts.Capacity-1.0f);
@@ -74,7 +85,7 @@ public class SplatScript : MonoBehaviour {
             ));
         }
 
-        List<int> indices = new List<int>();
+        indices.Clear();
         for(int i=1; i<verts.Count-1; ++i)
         {
             indices.Add(0);
@@ -88,7 +99,6 @@ public class SplatScript : MonoBehaviour {
         mesh.vertices = verts.ToArray();
         mesh.triangles = indices.ToArray();
 
-        meshFilter = GetComponent<MeshFilter>();
         meshFilter.mesh = mesh;
 
         MeshRenderer meshRenderer = GetComponent<MeshRenderer>();

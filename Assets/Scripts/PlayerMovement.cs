@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     private List<AudioClip> hitScale;
     private List<AudioClip> levelComplete;
 
+    [HideInInspector]
+    public bool inControll;
+
 	void Start ()
     {
         position = transform.position;
@@ -36,6 +39,13 @@ public class PlayerMovement : MonoBehaviour
 	
 	void FixedUpdate ()
     {
+        if (!inControll)
+        {
+            position.x = transform.position.x;
+            position.y = transform.position.y;
+            return;
+        }
+
         Vector2 input = new Vector2(
             Input.GetAxis("Horizontal"),
             Input.GetAxis("Vertical")
