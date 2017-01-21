@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
         else
         {
             audioManager.PlayHit(currentLevel.thingiesHit - 1);
+            currentLevel.timeLeft += 3;
         }
     }
 
