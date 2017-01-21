@@ -100,9 +100,6 @@ public class GameManager : MonoBehaviour
     {
         floatingText.transform.position = pos;
         floatingText.number = number;
-        floatingText.color = number > 0 ?
-            Color.black :
-            Color.black;
         Instantiate<FloatingTextScript>(floatingText);
     }
 }

@@ -105,5 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b7d76c426d04a5687c54001aa13dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 0, a: 1}
   number: -5
+  timeToLive: 0.75
+  speed: 5
+  positiveColor: {r: 0, g: 0, b: 0, a: 1}
+  negativeColor: {r: 0, g: 0, b: 0, a: 1}
