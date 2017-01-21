@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 acceleration;
 
     private SplatManager splatter;
-
     private AudioManager audioManager;
 
     [HideInInspector]
@@ -28,11 +27,11 @@ public class PlayerMovement : MonoBehaviour
 	void Start ()
     {
         position = transform.position;
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         splatter = GameObject.Find("Splatter").GetComponent<SplatManager>();
-	}
-	
-	void FixedUpdate ()
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+    }
+
+    void FixedUpdate ()
     {
         if (!inControll)
         {

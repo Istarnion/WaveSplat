@@ -11,50 +11,53 @@ public class AudioManager : MonoBehaviour
     private List<AudioClip> activeLevelCompleteChords; // one per instr
     private List<AudioClip> backgroundMusic;
 
-    // lists
     void Awake()
     {
-        splatOne = (AudioClip) Resources.Load("Audio/splat_01");
-        splatTwo = (AudioClip) Resources.Load("Audio/splat_02");
+        splatOne = (AudioClip)Resources.Load("Audio/splat_01");
+        splatTwo = (AudioClip)Resources.Load("Audio/splat_02");
         backgroundMusic = new List<AudioClip>();
-        hitIndex = 0;
 
         activeHitScale = new List<AudioClip>();
         activeLevelCompleteChords = new List<AudioClip>();
 
+        LoadSounds("Audio/BackingLoops", backgroundMusic);
         LoadSounds("Audio/HitScale/Piano", activeHitScale);
         LoadSounds("Audio/LevelComplete/Piano", activeLevelCompleteChords);
+
+        StartCoroutine(BackgroundMusic());
     }
     
+    IEnumerator BackgroundMusic()
+    {
+        while(true)
+        {
+            int index = Random.Range(0, backgroundMusic.Count);
+            AudioSource.PlayClipAtPoint(backgroundMusic[index], Camera.main.transform.position, 1f);
+            yield return new WaitForSeconds(backgroundMusic[index].length - 0.499f); // magic
+        }
+    }
 
     void LoadSounds(string path, List<AudioClip> clips)
     {
         foreach (Object clip in Resources.LoadAll(path)) clips.Add((AudioClip)clip);
     }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            AudioSource.PlayClipAtPoint(splatOne, Vector3.zero);
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            AudioSource.PlayClipAtPoint(splatTwo, Vector3.zero);
-        }
-    }
-
+    
     public void PlaySplat()
     {
-        if(splatSwitch)
-        {
-            AudioSource.PlayClipAtPoint(splatOne, Vector3.zero);
-        }
-        else
-        {
-            AudioSource.PlayClipAtPoint(splatTwo, Vector3.zero);
-        }
-
+        if (splatSwitch) AudioSource.PlayClipAtPoint(splatOne, Camera.main.transform.position);
+        else AudioSource.PlayClipAtPoint(splatTwo, Camera.main.transform.position);
         splatSwitch = !splatSwitch;
+    }
+
+    public void PlayHit(int clipIndex)
+    {
+        clipIndex %= activeHitScale.Count;
+        AudioSource.PlayClipAtPoint(activeHitScale[clipIndex], Camera.main.transform.position, 1f);
+    }
+
+    public void PlayLevelComplete(int clipIndex)
+    {
+        clipIndex %= activeLevelCompleteChords.Count;
+        AudioSource.PlayClipAtPoint(activeLevelCompleteChords[clipIndex], Camera.main.transform.position, 1f);
     }
 }
