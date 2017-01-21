@@ -60,7 +60,11 @@ public class SplatScript : MonoBehaviour {
             if(hitInfo)
             {
                 length = hitInfo.distance;
-                // TODO: Look at what we hit, and react
+                if (hitInfo.collider.CompareTag("Thingy"))
+                {
+                    var thingy = hitInfo.collider.GetComponent<ThingyScript>();
+                    thingy.Hit();
+                }
             }
 
             verts.Add(new Vector3(
