@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 78daac03def952c4eb5f790efef9dbbc
+timeCreated: 1485024846
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Datalegreya
+  fontNames:
+  - Datalegreya
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 2d5412583b361d24da02d40f91dac887, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
