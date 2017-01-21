@@ -120,6 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   splatPrefab: {fileID: 1943127836656612, guid: 53bbd7e856c744a87804a749da21829c,
     type: 2}
+  maxSplatRadius: 5
 --- !u!4 &21946518
 Transform:
   m_ObjectHideFlags: 0
@@ -127,7 +128,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 21946516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 383.1, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -218,7 +219,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4579656824754550, guid: f0d99996f3b9949ed897738af8926ada, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4579656824754550, guid: f0d99996f3b9949ed897738af8926ada, type: 2}
       propertyPath: m_LocalRotation.x
@@ -263,6 +264,7 @@ MonoBehaviour:
   maxSpeed: 20
   drag: 1.2
   accel: 500
+  splatTime: 0.25
 --- !u!4 &1336224965 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4579656824754550, guid: f0d99996f3b9949ed897738af8926ada,
@@ -299,7 +301,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -390,8 +392,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
