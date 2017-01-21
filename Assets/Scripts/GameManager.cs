@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public int currentLevelIndex = 0;
     private LevelScript currentLevel;
 
+    public FloatingTextScript floatingText;
+
     public Image faderImg;
     public Text timerText;
     public SplatManager splatter;
@@ -47,7 +49,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GoodHit()
+    public void GoodHit(ThingyScript thingy)
     {
         if (++currentLevel.thingiesHit >= currentLevel.numThingies)
         {
@@ -66,13 +68,15 @@ public class GameManager : MonoBehaviour
         {
             audioManager.PlayHit(currentLevel.thingiesHit - 1);
             currentLevel.timeLeft += 3;
+            SpawnFloatingText(3, thingy.transform.localPosition);
         }
     }
 
-    public void BadHit()
+    public void BadHit(ThingyScript thingy)
     {
-        // TODO: Play bad sound, be bad.
+        // TODO: Play bad sound,
         currentLevel.timeLeft -= 5;
+        SpawnFloatingText(-5, thingy.transform.localPosition);
     }
 
     IEnumerator GotoNextLevel()
@@ -90,5 +94,15 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(fadeTime);
         playerMovement.inControll = true;
         updateTimer = true;
+    }
+
+    private void SpawnFloatingText(int number, Vector3 pos)
+    {
+        floatingText.transform.position = pos;
+        floatingText.number = number;
+        floatingText.color = number > 0 ?
+            Color.black :
+            Color.black;
+        Instantiate<FloatingTextScript>(floatingText);
     }
 }
