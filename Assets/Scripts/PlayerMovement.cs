@@ -6,7 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public float radius = 0.5f;
 
-    public float maxSpeed = 20;
+    public float runSpeed = 25;
+    public float walkSpeed = 15;
     public float drag = 1.2f;
     public float accel = 500;
 
@@ -21,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
 
     private AudioManager audioManager;
 
+    [HideInInspector]
+    public bool inControll;
+
 	void Start ()
     {
         position = transform.position;
@@ -30,6 +34,13 @@ public class PlayerMovement : MonoBehaviour
 	
 	void FixedUpdate ()
     {
+        if (!inControll)
+        {
+            position.x = transform.position.x;
+            position.y = transform.position.y;
+            return;
+        }
+
         Vector2 input = new Vector2(
             Input.GetAxis("Horizontal"),
             Input.GetAxis("Vertical")
@@ -37,14 +48,16 @@ public class PlayerMovement : MonoBehaviour
 
         input.Normalize();
 
+        float speed = Input.GetAxis("Jump") > 0 ? runSpeed : walkSpeed;
+
         if (input.sqrMagnitude > 0)
         {
             acceleration = input * accel;
             velocity += acceleration * Time.deltaTime;
-            if (velocity.sqrMagnitude > maxSpeed*maxSpeed)
+            if (velocity.sqrMagnitude > speed*speed)
             {
                 velocity.Normalize();
-                velocity *= maxSpeed;
+                velocity *= speed;
             }
 
             var vel = new Vector2(0.5f * velocity.x * Time.fixedDeltaTime, 0);
@@ -78,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
                 splatCooldown = 0;
                 splatter.SpawnSplat(transform.position, Utils.Map(
                     velocity.magnitude,
-                    0, maxSpeed,
+                    0, runSpeed,
                     0, 1)
                 );
             }
