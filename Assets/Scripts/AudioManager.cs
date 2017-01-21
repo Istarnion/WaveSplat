@@ -5,27 +5,25 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private bool splatSwitch;
-    private AudioClip splatOne, splatTwo;
+    private AudioClip splatOne, splatTwo, failHit;
     private int hitIndex;
     private List<AudioClip> activeHitScale; // one array per instrument
     private List<AudioClip> activeLevelCompleteChords; // one per instr
     private List<AudioClip> backgroundMusic;
-    private List<AudioClip> failHits;
 
     void Awake()
     {
         splatOne = (AudioClip)Resources.Load("Audio/splat_01");
         splatTwo = (AudioClip)Resources.Load("Audio/splat_02");
-        backgroundMusic = new List<AudioClip>();
+        failHit = (AudioClip)Resources.Load("Audio/FailHit/fail");
 
+        backgroundMusic = new List<AudioClip>();
         activeHitScale = new List<AudioClip>();
         activeLevelCompleteChords = new List<AudioClip>();
-        failHits = new List<AudioClip>();
 
         LoadSounds("Audio/BackingLoops", backgroundMusic);
         LoadSounds("Audio/HitScale/Piano", activeHitScale);
         LoadSounds("Audio/LevelComplete/Piano", activeLevelCompleteChords);
-        LoadSounds("Audio/FailHit", failHits);
 
         StartCoroutine(BackgroundMusic());
     }
@@ -35,7 +33,7 @@ public class AudioManager : MonoBehaviour
         while(true)
         {
             int index = Random.Range(0, backgroundMusic.Count);
-            AudioSource.PlayClipAtPoint(backgroundMusic[index], Camera.main.transform.position, 0.7f);
+            AudioSource.PlayClipAtPoint(backgroundMusic[index], Camera.main.transform.position, 0.6f);
             yield return new WaitForSeconds(backgroundMusic[index].length - 0.499f); // magic
         }
     }
@@ -47,15 +45,14 @@ public class AudioManager : MonoBehaviour
     
     public void PlaySplat()
     {
-        if (splatSwitch) AudioSource.PlayClipAtPoint(splatOne, Camera.main.transform.position, 0.3f);
-        else AudioSource.PlayClipAtPoint(splatTwo, Camera.main.transform.position, 0.3f);
+        if (splatSwitch) AudioSource.PlayClipAtPoint(splatOne, Camera.main.transform.position, 0.15f);
+        else AudioSource.PlayClipAtPoint(splatTwo, Camera.main.transform.position, 0.15f);
         splatSwitch = !splatSwitch;
     }
 
     public void PlayFail()
     {
-        int index = Random.Range(0, failHits.Count);
-        AudioSource.PlayClipAtPoint(failHits[index], Camera.main.transform.position, 1f);
+        AudioSource.PlayClipAtPoint(failHit, Camera.main.transform.position, 1f);
     }
 
     public void PlayHit(int clipIndex)

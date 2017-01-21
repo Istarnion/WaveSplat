@@ -32,8 +32,8 @@ public class MenuScript : MonoBehaviour
 
     public void PlayMenuSelectSound()
     {
-        if (soundFlip) AudioSource.PlayClipAtPoint(menuOne, Camera.main.transform.position, 1f);
-        else AudioSource.PlayClipAtPoint(menuTwo, Camera.main.transform.position, 1f);
+        if (soundFlip) AudioSource.PlayClipAtPoint(menuOne, Camera.main.transform.position, .5f);
+        else AudioSource.PlayClipAtPoint(menuTwo, Camera.main.transform.position, .5f);
 
         soundFlip = !soundFlip;
     }
