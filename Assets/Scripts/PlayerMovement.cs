@@ -52,15 +52,37 @@ public class PlayerMovement : MonoBehaviour
                 velocity.Normalize();
                 velocity *= maxSpeed;
             }
-            position += 0.5f * velocity * Time.fixedDeltaTime;
+
+            var vel = new Vector2(0.5f * velocity.x * Time.fixedDeltaTime, 0);
+            var sign = Mathf.Sign(vel.x);
+            RaycastHit2D hitInfo = Physics2D.Raycast(
+                position, vel, Mathf.Abs(vel.x)+radius);
+            if(hitInfo)
+            {
+                vel.x = (hitInfo.distance-radius)*sign;
+            }
+            position.x += vel.x;
+
+            vel = new Vector2(0, 0.5f * velocity.y * Time.fixedDeltaTime);
+            sign = Mathf.Sign(vel.y);
+            hitInfo = Physics2D.Raycast(
+                position, vel, Mathf.Abs(vel.y)+radius);
+            if(hitInfo)
+            {
+                vel.y = (hitInfo.distance-radius)*sign;
+            }
+            position.y += vel.y;
+
             transform.position = position;
 
-            splatCooldown -= Time.fixedDeltaTime;
-            if (splatCooldown <= 0)
+            // Splats
+            // TODO: Hook this up against the walking speed!
+            splatCooldown += Time.fixedDeltaTime;
+            if (splatCooldown >= splatTime)
             {
                 AudioSource.PlayClipAtPoint(hitScale[noteIndex++], Vector3.zero);
                 if (noteIndex == hitScale.Count) noteIndex = 0;
-                splatCooldown = splatTime;
+                splatCooldown = 0;
                 splatter.SpawnSplat(transform.position, Utils.Map(
                     velocity.magnitude,
                     0, maxSpeed,
@@ -71,7 +93,6 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             velocity.x = velocity.y = 0;
-            splatCooldown = splatTime;
         }
 	}
 

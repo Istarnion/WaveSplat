@@ -16,25 +16,18 @@ public class SplatScript : MonoBehaviour {
     [Range(0.01f, 0.5f)]
     public float perlinStepSize = 0.01f;
     public float animationScale = 80f;
-    public Color[] colors;
-    private Color splatColor;
+
+    [HideInInspector]
+    public Color splatColor;
     private float perlinStart;
 
 	void Start()
     {
-        splatColor = colors[Random.Range(0, colors.Length)];
         perlinStart = Random.value*1000.0f;
 	}
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            radius = 0;
-            splatColor = colors[Random.Range(0, colors.Length)];
-            perlinStart = Random.value*1000.0f;
-        }
-
         if (radius < maxRadius)
         {
             if ((radius += Time.deltaTime*animationScale) > maxRadius) radius = maxRadius;
@@ -51,9 +44,9 @@ public class SplatScript : MonoBehaviour {
         Mesh mesh = new Mesh();
 
         List<Vector3> verts = new List<Vector3>();
-        verts.Capacity = 361;
+        verts.Capacity = 181;
         verts.Add(Vector3.zero);
-        float thetaInc = 2 * Mathf.PI / 360.0f;
+        float thetaInc = 2 * Mathf.PI / (verts.Capacity-1.0f);
         float perlinState = perlinStart;
         for(int i=1; i<verts.Capacity; ++i)
         {
@@ -78,7 +71,7 @@ public class SplatScript : MonoBehaviour {
         }
 
         List<int> indices = new List<int>();
-        for(int i=1; i<360; ++i)
+        for(int i=1; i<verts.Count-1; ++i)
         {
             indices.Add(0);
             indices.Add(i);
@@ -97,5 +90,4 @@ public class SplatScript : MonoBehaviour {
         MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.material.color = splatColor;
     }
-
 }

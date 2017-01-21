@@ -35,13 +35,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1943127836656612}
-  m_LocalRotation: {x: -1, y: 0, z: 0, w: 0}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: -1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!23 &23342186180490878
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -92,9 +92,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxRadius: 11.15
-  perlinStepSize: 0.02
-  animationScale: 49.4
-  colors:
-  - {r: 0.88235295, g: 0.22058824, b: 0.53549695, a: 1}
-  - {r: 0.9264706, g: 0.06812285, b: 0.12139958, a: 1}
-  - {r: 0.42409918, g: 0.10467128, b: 0.8897059, a: 1}
+  perlinStepSize: 0.07
+  animationScale: 30
+  splatColor: {r: 0, g: 0, b: 0, a: 0}
