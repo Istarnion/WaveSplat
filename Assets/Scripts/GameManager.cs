@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public bool levelCreationMode = false;
+
     Object[] levels;
     public int currentLevelIndex = 0;
     private LevelScript currentLevel;
@@ -16,18 +18,26 @@ public class GameManager : MonoBehaviour
     public SplatManager splatter;
     public PlayerMovement playerMovement;
 
-    private bool updateTimer = false;
+    private bool updateTimer = true;
 
     private AudioManager audioManager;
 
     void Start ()
     {
         Cursor.visible = false;
-        levels = Resources.LoadAll("Levels", typeof(GameObject));
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        currentLevel = ((GameObject)Instantiate(levels[0])).GetComponent<LevelScript>();
 
-        StartCoroutine(GotoNextLevel());
+        levels = Resources.LoadAll("Levels", typeof(GameObject));
+        if (levelCreationMode)
+        {
+            currentLevel = FindObjectOfType<LevelScript>();
+            playerMovement.inControll = true;
+        }
+        else
+        {
+            currentLevel = ((GameObject)Instantiate(levels[0])).GetComponent<LevelScript>();
+            StartCoroutine(GotoNextLevel());
+        }
 	}
 
     void Update()
