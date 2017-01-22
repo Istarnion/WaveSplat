@@ -30,9 +30,11 @@ public class AudioManager : MonoBehaviour
     
     IEnumerator BackgroundMusic()
     {
-        while(true)
+        int index = 0;
+        int i = 0;
+        while (true)
         {
-            int index = Random.Range(0, backgroundMusic.Count);
+            if ((i = Random.Range(0, 2)) != 0) index = Random.Range(0, backgroundMusic.Count);
             AudioSource.PlayClipAtPoint(backgroundMusic[index], Camera.main.transform.position, 0.6f);
             yield return new WaitForSeconds(backgroundMusic[index].length - 0.499f); // magic
         }

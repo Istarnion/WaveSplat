@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     void Start ()
     {
+        Cursor.visible = false;
         levels = Resources.LoadAll("Levels", typeof(GameObject));
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         currentLevel = ((GameObject)Instantiate(levels[0])).GetComponent<LevelScript>();
