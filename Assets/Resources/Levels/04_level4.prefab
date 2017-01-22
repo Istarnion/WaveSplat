@@ -2855,7 +2855,7 @@ MonoBehaviour:
   numThingies: 4
   timeLimit: 99
   timeLeft: 0
-  playerSpawnPoint: {x: 0, y: -2, z: -2}
+  playerSpawnPoint: {x: 4.5, y: 6.5, z: -2}
   thingiesHit: 0
 --- !u!114 &114238052492231776
 MonoBehaviour:
