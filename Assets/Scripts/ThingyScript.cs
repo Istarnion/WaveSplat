@@ -20,6 +20,8 @@ public class ThingyScript : MonoBehaviour
         {
             hasBeenHit = true;
 
+            GetComponentInChildren<SpriteRenderer>().color = Color.black;
+
             if (good)
             {
                 manager.GoodHit(this);
