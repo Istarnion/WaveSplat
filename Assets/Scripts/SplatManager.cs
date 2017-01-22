@@ -26,6 +26,7 @@ public class SplatManager : MonoBehaviour {
 
     public void ClearSplats()
     {
+        offset = new Vector3(0, 0, 5);
         int childCount = transform.childCount;
         for(int i=0; i<childCount; ++i)
         {

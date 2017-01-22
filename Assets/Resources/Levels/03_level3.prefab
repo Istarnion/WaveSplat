@@ -1001,7 +1001,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1982645005850842}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4, y: 1.05, z: -2}
+  m_LocalPosition: {x: -2.4, y: -0.95, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4984174149079878}
@@ -2000,9 +2000,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numThingies: 4
-  timeLimit: 99
+  timeLimit: 20
   timeLeft: 0
-  playerSpawnPoint: {x: 4, y: -1, z: -2}
+  playerSpawnPoint: {x: 4.5, y: 0.5, z: -2}
   thingiesHit: 0
 --- !u!114 &114470757951336054
 MonoBehaviour:

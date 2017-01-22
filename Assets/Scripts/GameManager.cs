@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
             {
                 currentLevelIndex = levels.Length - 1;
                 faderImg.CrossFadeAlpha(1, 1, false);
+                Invoke("GotoGameOver", 1);
             }
         }
         else
@@ -112,5 +114,10 @@ public class GameManager : MonoBehaviour
         floatingText.transform.position = pos;
         floatingText.number = number;
         Instantiate<FloatingTextScript>(floatingText);
+    }
+
+    private void GotoGameOver()
+    {
+        SceneManager.LoadScene(2);
     }
 }
